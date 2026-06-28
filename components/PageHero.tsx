@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 type Action = {
@@ -59,13 +59,13 @@ export function PageHero({
               <img src={imageSrc} alt={imageAlt ?? title} />
             </figure>
           ) : (
-            <div className="hero-visual" aria-label="Spatiu vizual GIUVA Romania">
+            <div className="hero-visual" aria-label="GIUVA Europe visual placeholder">
               <div className="absolute left-10 top-10 rounded-xl bg-white/92 p-5 text-[#081f3a] shadow-2xl">
-                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#1f5fbf]">GIUVA Romania</p>
-                <p className="mt-2 text-3xl font-black">Romania + Europe</p>
+                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#1f5fbf]">GIUVA Europe</p>
+                <p className="mt-2 text-3xl font-black">Community + Europe</p>
               </div>
               <div className="absolute bottom-24 right-10 grid gap-3">
-                {["Bucuresti", "Oradea", "Europe"].map((node) => (
+                {["Community", "Ideas", "Europe"].map((node) => (
                   <span key={node} className="rounded-full bg-white/88 px-4 py-2 text-sm font-black text-[#081f3a] shadow-xl">
                     {node}
                   </span>
@@ -78,3 +78,4 @@ export function PageHero({
     </section>
   );
 }
+

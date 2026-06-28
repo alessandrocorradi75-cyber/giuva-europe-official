@@ -1,37 +1,44 @@
-﻿import type { Metadata } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { italyBrand, italySeoKeywords } from "@/data/italia";
+import { europeBrand, europeSeoKeywords } from "@/data/europa";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.giuva.it"),
+  metadataBase: new URL("https://www.giuva.eu"),
   title: {
-    default: "GIUVA APS Italia | Connecting Communities Across Europe",
-    template: "%s | GIUVA APS Italia"
+    default: "GIUVA Europe | Your Community. Your Ideas. Your Impact.",
+    template: "%s | GIUVA Europe"
   },
-  description:
-    "GIUVA APS Italia sviluppa comunità resilienti, inclusive, sostenibili e solidali attraverso volontariato, prevenzione, educazione e cooperazione europea.",
-  keywords: italySeoKeywords,
+  description: "GIUVA Europe is a European community platform connecting people, volunteers and local initiatives to create real social impact.",
+  keywords: europeSeoKeywords,
   openGraph: {
-    title: "GIUVA APS Italia",
-    description: italyBrand.description,
-    url: "https://www.giuva.it",
-    siteName: "GIUVA APS Italia",
-    locale: "it_IT",
-    type: "website"
+    title: "GIUVA Europe",
+    description: europeBrand.subtitle,
+    url: "https://www.giuva.eu",
+    siteName: "GIUVA Europe",
+    locale: "en_GB",
+    type: "website",
+    images: [{ url: "/brand/giuva-europe-community-platform.png", width: 2048, height: 1152, alt: "GIUVA Europe community platform" }]
   },
-  icons: {
-    icon: "/favicon.svg"
-  }
+  twitter: {
+    card: "summary_large_image",
+    title: "GIUVA Europe",
+    description: europeBrand.subtitle,
+    images: ["/brand/giuva-europe-community-platform.png"]
+  },
+  icons: { icon: "/favicon.svg" }
 };
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 5 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it">
+    <html lang="en">
       <body className="site-shell">
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <Navbar />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>
