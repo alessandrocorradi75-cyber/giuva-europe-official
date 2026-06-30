@@ -1,53 +1,244 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { EuropeHeroVisual } from "@/components/EuropeHeroVisual";
-import { EuropeProgramCards } from "@/components/EuropeProgramCards";
-import { communityGroups, europeBrand, europeCountries, europeCtas, europeProjectAreas, ideaPathway } from "@/data/europa";
+import {
+  ArrowRight,
+  Bike,
+  Bot,
+  ClipboardList,
+  Coffee,
+  Compass,
+  GraduationCap,
+  HandHeart,
+  Heart,
+  HeartPulse,
+  Leaf,
+  Lightbulb,
+  MessageCircle,
+  ShieldCheck,
+  Target,
+  Users,
+  Wrench
+} from "lucide-react";
+import { europeBrand, europeCountries, europeProgrammes } from "@/data/europa";
 
 export const metadata: Metadata = {
-  title: "GIUVA Europe | Your Community. Your Ideas. Your Impact.",
-  description: "GIUVA Europe is a European community platform connecting people, volunteers and local initiatives to create real social impact."
+  title: "GIUVA Europe | Not an Organisation. A Community.",
+  description:
+    "GIUVA Europe is a European community where people meet, ideas become projects and communities grow stronger together.",
+  openGraph: {
+    title: "GIUVA Europe | Not an Organisation. A Community.",
+    description:
+      "A European community connecting people, projects, volunteering opportunities and national GIUVA organisations across Europe.",
+    images: ["/brand/giuva-europe-community-platform.png"]
+  }
 };
 
+const stories = [
+  {
+    name: "Maria",
+    text: "She came for a coffee. Today she coordinates a Community & Social project.",
+    accent: "#16825d"
+  },
+  {
+    name: "Andrei",
+    text: "He came because he loves motorcycles. Today he volunteers with Riders Rescue.",
+    accent: "#0b2a4a"
+  },
+  {
+    name: "Luca",
+    text: "He had an idea. Today that idea became a GIUVA project.",
+    accent: "#0891b2"
+  },
+  {
+    name: "Elena",
+    text: "She simply wanted to help. Today she supports her community through Community & Social.",
+    accent: "#18865b"
+  },
+  {
+    name: "Anna",
+    text: "She wanted to travel. Today she connects people across Europe through Journey.",
+    accent: "#2f7d32"
+  },
+  {
+    name: "Marco",
+    text: "He wanted to teach. Today he trains future volunteers through GIUVA Academy.",
+    accent: "#7c3aed"
+  }
+];
+
+const projectSteps = [
+  { label: "Meet", icon: Users },
+  { label: "Coffee", icon: Coffee },
+  { label: "Idea", icon: Lightbulb },
+  { label: "Development", icon: Wrench },
+  { label: "Community", icon: Users },
+  { label: "Partners", icon: HandHeart },
+  { label: "Project", icon: ClipboardList },
+  { label: "Impact", icon: Heart }
+];
+
+const disciplineIcons: Record<string, typeof Users> = {
+  "community-social": Users,
+  "riders-rescue": Bike,
+  "civil-support": HandHeart,
+  preparedness: ShieldCheck,
+  journey: Compass,
+  "project-pulse": Target,
+  academy: GraduationCap,
+  youth: Leaf,
+  senior: HeartPulse
+};
+
+const partners = [
+  "Institutional partners",
+  "Educational partners",
+  "Corporate partners",
+  "Community partners"
+];
+
+const transparencyLinks = ["Governance", "Policies", "GDPR", "Reports", "Standards", "Documents"];
+
 export default function EuropeHomePage() {
+  const visibleProgrammes = europeProgrammes.filter((programme) => Object.hasOwn(disciplineIcons, programme.slug));
+
   return (
     <>
-      <section className="home-hero px-5 pb-14 pt-28 md:pb-20 md:pt-36">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.82fr_1.18fr]">
-          <div>
-            <span className="eyebrow">European community platform</span>
-            <h1 className="mt-5 text-5xl font-black leading-tight tracking-tight text-[#081f3a] md:text-7xl">GIUVA Europe</h1>
-            <p className="mt-4 max-w-2xl break-words text-base font-black uppercase leading-7 tracking-[0.12em] text-[#16825d] md:text-xl">{europeBrand.fullName}</p>
-            <p className="mt-6 max-w-3xl text-3xl font-black leading-tight text-[#081f3a] md:text-5xl">{europeBrand.claim}</p>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">{europeBrand.subtitle}</p>
-            <p className="mt-5 max-w-2xl rounded-xl border border-[#1f5fbf]/15 bg-white/80 p-4 text-base font-black leading-7 text-[#081f3a]">GIUVA is not just volunteering. GIUVA is community. Your community.</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={europeCtas.join.href} className="btn btn-primary hero-primary-cta">{europeCtas.join.label}<ArrowRight size={19} aria-hidden="true" /></Link>
-              <Link href={europeCtas.programmes.href} className="btn btn-blue">{europeCtas.programmes.label}</Link>
-              <Link href={europeCtas.initiative.href} className="btn btn-ghost">{europeCtas.initiative.label}</Link>
-            </div>
+      <section className="eu-standard-hero" aria-labelledby="home-hero-title">
+        <div className="hero-media" aria-hidden="true">
+          <img src="/brand/giuva-europe-community-platform.png" alt="" />
+        </div>
+        <div className="hero-scrim" aria-hidden="true" />
+        <div className="hero-content">
+          <p className="hero-kicker">GIUVA Europe</p>
+          <h1 id="home-hero-title">NOT AN ORGANISATION.<br /><span>A COMMUNITY.</span></h1>
+          <p className="hero-subtitle">People meet.<br />Ideas become projects.<br />Communities grow stronger together.<br />GIUVA connects people across Europe.</p>
+          <div className="hero-actions" aria-label="Primary actions">
+            <Link href="/about" className="btn btn-blue">Discover GIUVA</Link>
+            <Link href="/community" className="btn btn-light">Join the Community</Link>
           </div>
-          <EuropeHeroVisual />
+          <p className="hero-bottom"><Heart size={18} aria-hidden="true" /> Everyone has something to offer.</p>
         </div>
       </section>
 
-      <section className="bg-white px-5 py-16"><div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
-        {[{ title: "What is GIUVA?", text: "A European platform where people, volunteers, ideas and local initiatives meet." }, { title: "Why it matters", text: "People can belong, contribute and turn useful ideas into community action." }, { title: "Clear boundary", text: "GIUVA is civic and complementary. It does not replace public institutions or emergency services." }].map((item) => <article key={item.title} className="card interactive-card flex min-h-56 flex-col justify-between p-6"><span className="eyebrow self-start">{item.title}</span><p className="mt-5 text-lg font-bold leading-8 text-slate-700">{item.text}</p></article>)}
-      </div></section>
+      <section className="people-section" aria-labelledby="coffee-title">
+        <div className="section-heading centered">
+          <p className="eyebrow">Stories before explanations</p>
+          <h2 id="coffee-title">Everything can start with a coffee.</h2>
+          <p>Representative journeys showing how people can find their place inside GIUVA.</p>
+        </div>
+        <div className="story-grid">
+          {stories.map((story, index) => (
+            <article className="story-card" key={story.name}>
+              <div className="story-portraits" style={{ "--story-accent": story.accent } as React.CSSProperties}>
+                <div><span>{story.name[0]}</span><small>Before</small></div>
+                <ArrowRight size={22} aria-hidden="true" />
+                <div><span>{story.name[0]}</span><small>GIUVA</small></div>
+              </div>
+              <h3>{story.name}</h3>
+              <p>{story.text}</p>
+              <Link href={`/community#story-${index + 1}`}>Discover the Story <ArrowRight size={14} aria-hidden="true" /></Link>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      <section className="bg-[#f6f8fb] px-5 py-20"><div className="mx-auto max-w-7xl"><div className="max-w-4xl"><span className="eyebrow">Community for everyone</span><h2 className="section-title mt-5">A place where different people can meet, share and build.</h2><p className="section-text">GIUVA is designed for young people, seniors, families, professionals, volunteers, motorcyclists, social partners and civic institutions.</p></div><div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{communityGroups.map((group) => <div key={group} className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-black text-[#081f3a] shadow-sm">{group}</div>)}</div></div></section>
+      <section className="timeline-band" aria-labelledby="timeline-title">
+        <h2 id="timeline-title">How a GIUVA project is born</h2>
+        <div className="project-timeline">
+          {projectSteps.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <div className="timeline-item" key={step.label}>
+                <Icon size={34} aria-hidden="true" />
+                <span>{step.label}</span>
+                {index < projectSteps.length - 1 ? <ArrowRight className="timeline-arrow" size={22} aria-hidden="true" /> : null}
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
-      <section className="bg-white px-5 py-20"><div className="mx-auto max-w-7xl"><div className="max-w-4xl"><span className="eyebrow">From ideas to impact</span><h2 className="section-title mt-5">From a coffee to a community project.</h2><p className="section-text">GIUVA turns simple human encounters into practical local action.</p></div><div className="mt-10 grid gap-5 md:grid-cols-4">{ideaPathway.map((step) => { const Icon = step.icon; return <article key={step.title} className="card interactive-card p-6"><Icon className="text-[#16825d]" size={32} aria-hidden="true" /><h2 className="mt-4 text-2xl font-black text-[#081f3a]">{step.title}</h2><p className="mt-3 leading-7 text-slate-600">{step.text}</p></article>; })}</div></div></section>
+      <section className="people-section compact" aria-labelledby="place-title">
+        <div className="section-heading centered">
+          <h2 id="place-title">Find your place. Choose your way to make an impact.</h2>
+        </div>
+        <div className="discipline-strip">
+          {visibleProgrammes.map((programme) => {
+            const Icon = disciplineIcons[programme.slug];
+            return (
+              <Link className="discipline-tile" href={`/programmes#${programme.slug}`} key={programme.slug}>
+                <span className="discipline-icon" style={{ backgroundColor: programme.accent.replace("bg-[", "").replace("]", "") }}><Icon size={30} aria-hidden="true" /></span>
+                <strong>{programme.name}</strong>
+                <small>Discover <ArrowRight size={13} aria-hidden="true" /></small>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
-      <section className="bg-[#f6f8fb] px-5 py-20"><div className="mx-auto max-w-7xl"><div className="max-w-4xl"><span className="eyebrow">Programmes</span><h2 className="section-title mt-5">One platform, many ways to be useful.</h2><p className="section-text">Each programme has its own identity, while remaining coordinated by the same European community vision.</p></div><div className="mt-10"><EuropeProgramCards limit={6} /></div></div></section>
+      <section className="home-feature-grid" aria-label="Network, AI volunteer and support">
+        <article className="feature-panel map-panel">
+          <p className="eyebrow">European network</p>
+          <h2>A network across Europe</h2>
+          <p>One vision. Many communities. Stronger together.</p>
+          <div className="country-list">
+            {europeCountries.map((country) => <span key={country.name}>{country.name.replace("GIUVA ", "")}</span>)}
+          </div>
+          <Link href="/countries" className="btn btn-blue">Explore the Network <ArrowRight size={16} aria-hidden="true" /></Link>
+        </article>
 
-      <section className="bg-white px-5 py-20"><div className="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-[0.9fr_1.1fr]"><div><span className="eyebrow">Development areas</span><h2 className="section-title mt-5">Community, youth, preparedness, travel and solidarity.</h2><p className="section-text">GIUVA Europe presents future development areas carefully, without fake partnerships or unauthorized operational claims.</p></div><div className="grid gap-5 sm:grid-cols-2">{europeProjectAreas.map((area) => { const Icon = area.icon; return <article key={area.title} className="card p-6"><Icon className="text-[#1f5fbf]" size={30} aria-hidden="true" /><h2 className="mt-4 text-xl font-black text-[#081f3a]">{area.title}</h2><p className="mt-3 leading-7 text-slate-600">{area.text}</p></article>; })}</div></div></section>
+        <article className="feature-panel ai-panel">
+          <div>
+            <p className="eyebrow">Digital welcome</p>
+            <h2>The AI Volunteer</h2>
+            <p>I am here to help you discover GIUVA, our projects, opportunities and how you can get involved.</p>
+            <div className="question-chips" aria-label="Example GIUVA questions">
+              <span>What is GIUVA?</span>
+              <span>How can I volunteer?</span>
+              <span>Which projects exist?</span>
+              <span>How can I support GIUVA?</span>
+            </div>
+          </div>
+          <div className="ai-avatar" aria-hidden="true"><Bot size={62} /></div>
+        </article>
 
-      <section className="bg-[#f6f8fb] px-5 py-20"><div className="mx-auto max-w-7xl"><div className="max-w-4xl"><span className="eyebrow">Countries</span><h2 className="section-title mt-5">GIUVA.eu is the umbrella. National sites are local implementations.</h2><p className="section-text">The European network can grow through autonomous communities sharing a common identity, values and public language.</p></div><div className="mt-10 grid gap-5 md:grid-cols-3">{europeCountries.map((country) => <article key={country.name} className="card interactive-card p-6"><h2 className="text-2xl font-black text-[#081f3a]">{country.name}</h2><p className="mt-3 font-bold text-[#16825d]">{country.status}</p><p className="mt-2 text-sm font-black uppercase tracking-[0.12em] text-slate-500">{country.year}</p></article>)}</div></div></section>
+        <article className="feature-panel support-panel">
+          <p className="eyebrow">Support GIUVA</p>
+          <h2>Support GIUVA</h2>
+          <p>GIUVA Europe does not currently receive direct donations. You can support GIUVA through the national organisation of your choice.</p>
+          <Link href="/countries" className="btn btn-blue">Choose your country <ArrowRight size={16} aria-hidden="true" /></Link>
+        </article>
+      </section>
 
-      <section className="navy-band px-5 py-20"><div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_0.8fr]"><div><span className="eyebrow bg-white/10 text-white">Become part of GIUVA</span><h2 className="mt-5 max-w-4xl text-4xl font-black leading-tight md:text-6xl">Do you have an idea? Do you want to help? Do you want to build something for your community?</h2><p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">GIUVA is the place where your idea can grow into responsible local and European impact.</p></div><div className="card bg-white p-7 md:p-8">{["I can belong here.", "I can contribute here.", "My idea can become useful here.", "This is my community."].map((item) => <div key={item} className="flex items-center gap-3 border-b border-slate-100 py-4 last:border-b-0"><CheckCircle2 className="shrink-0 text-[#16825d]" size={24} aria-hidden="true" /><span className="text-xl font-black text-[#081f3a]">{item}</span></div>)}<Link href="/contact" className="btn btn-primary mt-6 w-full">Contact GIUVA Europe</Link></div></div></section>
+      <section className="partners-section" aria-labelledby="partners-title">
+        <div className="section-heading centered">
+          <h2 id="partners-title">Together with our partners</h2>
+          <p>Only confirmed partnerships should be displayed publicly. This homepage keeps partner categories clear.</p>
+        </div>
+        <div className="partner-row">
+          {partners.map((partner) => <Link href="/partners" key={partner}>{partner}</Link>)}
+        </div>
+      </section>
+
+      <section className="transparency-band" aria-labelledby="transparency-title">
+        <div>
+          <p className="eyebrow">Trust and standards</p>
+          <h2 id="transparency-title">Transparent, accessible and European by design.</h2>
+          <p>{europeBrand.description}</p>
+        </div>
+        <div className="transparency-links">
+          {transparencyLinks.map((item) => <Link href="/transparency" key={item}>{item}</Link>)}
+        </div>
+      </section>
+
+      <details className="ai-volunteer-widget">
+        <summary aria-label="Open the AI Volunteer"><MessageCircle size={24} aria-hidden="true" /></summary>
+        <div>
+          <h2>The AI Volunteer</h2>
+          <p>I can help with GIUVA, communities, volunteering, projects, countries, partners, events, programmes and donations.</p>
+          <p className="ai-safety">For anything outside GIUVA, I will politely redirect the conversation back to the community.</p>
+        </div>
+      </details>
     </>
   );
 }
-
