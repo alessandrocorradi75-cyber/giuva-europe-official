@@ -71,12 +71,78 @@ export const ideaPathway = [
 ];
 
 export const europeCountries = [
-  { name: "GIUVA Italy", status: "Local implementation", year: "2026", href: "https://www.giuva.it" },
-  { name: "GIUVA Romania", status: "Local implementation", year: "2026", href: "https://www.giuva.ro" },
-  { name: "GIUVA Spain", status: "Future country", year: "2027", href: "#" },
-  { name: "GIUVA Austria", status: "Planned", year: "2027", href: "#" },
-  { name: "GIUVA Hungary", status: "Planned", year: "2028", href: "#" },
-  { name: "Future countries", status: "Open network", year: "Roadmap", href: "#" }
+  {
+    code: "IT",
+    slug: "italy",
+    name: "GIUVA Italy",
+    country: "Italy",
+    domain: "giuva.it",
+    locale: "it",
+    status: "Local implementation",
+    operationalStatus: "active",
+    year: "2026",
+    href: "https://www.giuva.it"
+  },
+  {
+    code: "RO",
+    slug: "romania",
+    name: "GIUVA Romania",
+    country: "Romania",
+    domain: "giuva.ro",
+    locale: "ro",
+    status: "Local implementation",
+    operationalStatus: "active",
+    year: "2026",
+    href: "https://www.giuva.ro"
+  },
+  {
+    code: "ES",
+    slug: "spain",
+    name: "GIUVA Spain",
+    country: "Spain",
+    domain: "giuva.es",
+    locale: "es",
+    status: "Future country",
+    operationalStatus: "planned",
+    year: "2027",
+    href: "https://www.giuva.es"
+  },
+  {
+    code: "AT",
+    slug: "austria",
+    name: "GIUVA Austria",
+    country: "Austria",
+    domain: null,
+    locale: "de",
+    status: "Planned",
+    operationalStatus: "planned",
+    year: "2027",
+    href: "#"
+  },
+  {
+    code: "HU",
+    slug: "hungary",
+    name: "GIUVA Hungary",
+    country: "Hungary",
+    domain: null,
+    locale: "hu",
+    status: "Planned",
+    operationalStatus: "planned",
+    year: "2028",
+    href: "#"
+  },
+  {
+    code: null,
+    slug: "future",
+    name: "Future countries",
+    country: "Europe",
+    domain: null,
+    locale: "en",
+    status: "Open network",
+    operationalStatus: "future",
+    year: "Roadmap",
+    href: "#"
+  }
 ];
 
 export const europeProjectAreas = [
@@ -110,3 +176,4 @@ export const europeSocialLinks = [
 ];
 
 export const europeSeoKeywords = ["GIUVA Europe", "European community platform", "European volunteering", "community volunteering", "social impact Europe", "civil society platform", "volunteer network Europe", "community projects", "preparedness volunteers", "food solidarity", "youth volunteering", "inclusive community", "European civic innovation"];
+

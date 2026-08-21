@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { fetchDisciplines, fetchEvents, fetchProjects } from "@/lib/api/public";
 import {
   ArrowRight,
   Building2,
@@ -140,7 +141,13 @@ const steps = [
   ["05", "Create impact", "Help make communities stronger together."]
 ];
 
-export default function EuropeHomePage() {
+export default async function EuropeHomePage() {
+  const [projects, disciplines, events] = await Promise.all([
+    fetchProjects("giuva.eu"),
+    fetchDisciplines("giuva.eu"),
+    fetchEvents("giuva.eu", { upcomingOnly: true }),
+  ]);
+
   return (
     <div className="bg-[#f6f8fb] text-[#102033]">
 
@@ -312,6 +319,215 @@ export default function EuropeHomePage() {
 
         </div>
       </section>
+
+      {projects.length > 0 && (
+        <section className="bg-[#f6f8fb] px-5 py-20">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[.16em] text-blue-700">
+                  GIUVA Projects
+                </p>
+
+                <h2 className="mt-2 text-[clamp(2.2rem,4vw,3.5rem)] font-black leading-tight text-[#071f3d]">
+                  Projects across Europe.
+                </h2>
+
+                <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-600">
+                  Discover public GIUVA projects currently planned or active across Europe.
+                </p>
+              </div>
+
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 font-black text-blue-700"
+              >
+                Explore projects
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {projects.slice(0, 6).map((project) => (
+                <article
+                  key={project.id}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_15px_42px_rgba(8,31,58,.08)]"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-[#16825d] px-3 py-1 text-xs font-black uppercase text-white">
+                      {project.featured ? "Featured" : project.status}
+                    </span>
+
+                    {project.country_code && (
+                      <span className="text-xs font-black uppercase tracking-[.1em] text-slate-500">
+                        {project.country_code}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="mt-4 text-2xl font-black text-[#071f3d]">
+                    {project.title}
+                  </h3>
+
+                  {project.description && (
+                    <p className="mt-3 leading-relaxed text-slate-600">
+                      {project.description}
+                    </p>
+                  )}
+
+                  {(project.city || project.country_code) && (
+                    <p className="mt-5 flex items-center gap-2 text-sm font-semibold text-slate-600">
+                      <MapPin size={16} />
+                      {[project.city, project.country_code]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </p>
+                  )}
+
+                  {(project.starts_at || project.ends_at) && (
+                    <p className="mt-2 flex items-center gap-2 text-sm text-slate-600">
+                      <CalendarDays size={16} />
+                      {project.starts_at ?? "Open"}
+                      {project.ends_at ? ` → ${project.ends_at}` : ""}
+                    </p>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {disciplines.length > 0 && (
+        <section className="bg-white px-5 py-20">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="mb-9">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-[#16825d]">
+                GIUVA Disciplines
+              </p>
+
+              <h2 className="mt-2 text-[clamp(2.2rem,4vw,3.5rem)] font-black leading-tight text-[#071f3d]">
+                Different ways to make a difference.
+              </h2>
+
+              <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-600">
+                GIUVA disciplines bring together different skills, interests and forms of community participation across Europe.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {disciplines.map((discipline) => (
+                <article
+                  key={discipline.id}
+                  className="rounded-2xl border border-slate-200 bg-[#f6f8fb] p-6 shadow-[0_12px_36px_rgba(8,31,58,.06)]"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-[#16825d] px-3 py-1 text-xs font-black uppercase text-white">
+                      {discipline.featured ? "Featured" : "Discipline"}
+                    </span>
+
+                    {discipline.country_availability.length > 0 && (
+                      <span className="text-xs font-black uppercase tracking-[.1em] text-slate-500">
+                        {discipline.country_availability.join(" · ")}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="mt-4 text-2xl font-black text-[#071f3d]">
+                    {discipline.name}
+                  </h3>
+
+                  {discipline.description && (
+                    <p className="mt-3 leading-relaxed text-slate-600">
+                      {discipline.description}
+                    </p>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {events.length > 0 && (
+        <section className="bg-[#f6f8fb] px-5 py-20">
+          <div className="mx-auto max-w-[1180px]">
+            <div className="mb-9">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-blue-700">
+                Upcoming Events
+              </p>
+
+              <h2 className="mt-2 text-[clamp(2.2rem,4vw,3.5rem)] font-black leading-tight text-[#071f3d]">
+                Meet, participate, take action.
+              </h2>
+
+              <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-600">
+                Discover upcoming GIUVA events and community activities across Europe.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {events.slice(0, 6).map((event) => (
+                <article
+                  key={event.id}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_12px_36px_rgba(8,31,58,.06)]"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-blue-700 px-3 py-1 text-xs font-black uppercase text-white">
+                      {event.featured ? "Featured" : event.event_type}
+                    </span>
+
+                    {event.country_code && (
+                      <span className="text-xs font-black uppercase tracking-[.1em] text-slate-500">
+                        {event.country_code}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="mt-4 text-2xl font-black text-[#071f3d]">
+                    {event.title}
+                  </h3>
+
+                  {event.description && (
+                    <p className="mt-3 leading-relaxed text-slate-600">
+                      {event.description}
+                    </p>
+                  )}
+
+                  <div className="mt-5 space-y-2 text-sm text-slate-600">
+                    <p className="flex items-center gap-2">
+                      <CalendarDays size={16} />
+                      {new Date(event.starts_at).toLocaleString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+
+                    {(event.city || event.location) && (
+                      <p className="flex items-center gap-2">
+                        <MapPin size={16} />
+                        {[event.location, event.city, event.country_code]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </p>
+                    )}
+
+                    {event.max_participants && (
+                      <p className="flex items-center gap-2">
+                        <Users size={16} />
+                        Up to {event.max_participants} participants
+                      </p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* HOW IT WORKS */}
       <section className="px-5 py-20">
@@ -606,3 +822,8 @@ export default function EuropeHomePage() {
     </div>
   );
 }
+
+
+
+
+
